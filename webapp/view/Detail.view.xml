@@ -1,7 +1,75 @@
 <mvc:View controllerName="sap.training.exc.controller.Detail"
           xmlns:mvc="sap.ui.core.mvc" 
-          xmlns="sap.m">
+          xmlns="sap.m"
+          xmlns:f="sap.ui.layout.form"
+          xmlns:core="sap.ui.core"
+          core:require="{formatter: 'sap/training/exc/model/formatter'}">
 
-   
+    <Page title="{i18n>detailPageTitle}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <ObjectHeader
+                responsive="true"
+                fullScreenOptimized="true"
+                title="{Form} {CustomerName}">
+                <attributes>
+                    <ObjectAttribute title="{i18n>customerNumberTitle}" text="{CustomerNumber}"/>
+                    <ObjectAttribute title="{i18n>streetTitle}" text="{Street}"/>
+                    <ObjectAttribute title="{i18n>postcodeTitle}" text="{PostCode}"/>
+                    <ObjectAttribute title="{i18n>cityTitle}" text="{City}"/>
+                    <ObjectAttribute title="{i18n>countryTitle}" text="{Country}"/>
+                    <ObjectAttribute title="{i18n>emailTitle}" text="{Email}"/>
+                    <ObjectAttribute title="{i18n>phoneTitle}" text="{Telephone}"/>                
+                    <ObjectAttribute title="{i18n>discountTitle}" text="{ path: 'Discount',
+                                                                        type: 'sap.ui.model.type.Float',
+                                                                        formatOptions: {minFractionDigits: 2, maxFractionDigits: 2}
+                                                                        } %"/>
+                </attributes>
+            </ObjectHeader>
+
+
+            <Table id="_bookingTable" headerText="Bookings" items="{_Bookings}"
+                    growing="true" growingThreshold="5" class="sapUiResponsiveMargin" width="auto">
+                <columns>
+                    <Column><header><Text text="{i18n>airlineColumnHeader}"/></header></Column>
+                    <Column><header><Text text="{i18n>connectionColumnHeader}"/></header></Column>
+                    <Column><header><Text text="{i18n>fldateColumnHeader}"/></header></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><header><Text text="{i18n>classColumnHeader}"/></header></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><header><Text text="{i18n>paymentColumnHeader}"/></header></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><header><Text text="i18n>cancellationColumnHeader"/></header></Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                    <cells>
+                        <ObjectIdentifier title="{AirlineID}"/>
+                        <ObjectIdentifier title="{ConnectionNumber}"/> 
+                        <ObjectIdentifier
+                            title="{
+                                path: 'FlightDate',
+                                type: 'sap.ui.model.type.Date',
+                                formatOptions: {
+                                source: {pattern: 'yyyy-MM-dd'},
+                                style: 'medium'
+                            }
+                        }"/>
+                        <Text text="{
+                            path: 'Class',
+                            formatter: 'formatter.classText'
+                        }"/>
+                        <ObjectNumber 
+                            number="{ parts: [
+                                {path: 'ForeignCurrencyPayment'},
+                                {path: 'ForeignCurrency'} 
+                            ], type: 'sap.ui.model.type.Currency',
+                            formatOptions: {showMeasure: false} }"
+                            unit="{ForeignCurrency}"/>
+                        <core:Icon
+                            src="{= ${IsCancelled} === 'X' ? 'sap-icon://cancel' : 'sap-icon://accept' }"
+                            tooltip="{= ${IsCancelled} === 'X' ? 'cancelled' : 'not cancelled' }"/>
+                    </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
 	
 </mvc:View>

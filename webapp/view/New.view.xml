@@ -1,0 +1,67 @@
+<mvc:View controllerName="sap.training.exc.controller.New"
+          xmlns:mvc="sap.ui.core.mvc"
+          xmlns:f="sap.ui.layout.form"
+          xmlns:core="sap.ui.core"
+          core:require="{formatter: 'sap/training/exc/model/formatter'}" 
+          xmlns="sap.m">
+
+    <Page title="{i18n>textBack}" showNavButton="true" navButtonPress=".onNavBack">
+        <content>
+            <Panel headerText="New Customer" expanded="{device>/system/desktop}"
+                expandable="{= !${device>/system/desktop} }"
+                class="sapUiResponsiveMargin sapUiHideOnPhone" width="auto">
+                <content>
+                    <f:SimpleForm layout="ColumnLayout" editable="true">
+                    <f:toolbar>
+                        <Toolbar>
+                        <content>
+                            <ToolbarSpacer/>
+                            <Button icon="sap-icon://create" text="{i18n>textSave}" press=".onSave"
+                            enabled="true"/>
+                        </content>
+                        </Toolbar>
+                    </f:toolbar>
+                    <f:content>
+                        <core:Title text="{i18n>generalDataFormContainerTitle}"/>
+                            <Label text="Form"/>
+                            <Input value="{customer>/Form}"/>
+
+                            <Label text="{i18n>nameLabelText}"/>
+                            <Input value="{customer>/CustomerName}" valueLiveUpdate="true"/>
+                            
+                            <Label text="{i18n>discountLabelText}"/>
+                            <Input
+                                value="{
+                                    path: 'customer>/Discount',
+                                    type: 'sap.ui.model.type.Integer',
+                                    constraints: {minimum: 0, maximum: 100}
+                                }"
+                            />
+
+                        <core:Title text="{i18n>addressDataFormContainerTitle}"/>
+                            <Label text="{i18n>streetLabelText}"/>
+                            <Input value="{customer>/Street}"/>
+
+                            <Label text="{i18n>postcodeLabelText}"/>
+                            <Input value="{customer>/PostCode}"/>
+
+                            <Label text="{i18n>cityLabelText}"/>
+                            <Input value="{customer>/City}"/>
+
+                            <Label text="{i18n>countryLabelText}"/>
+                            <Input value="{customer>/Country}"/>               
+
+                        <core:Title text="{i18n>contactDataFormContainerTitle}"/>
+                            <Label text="{i18n>emailLabelText}"/>                    
+                            <Input value="{customer>/Email}"/>
+
+                            <Label text="{i18n>phoneLabelText}"/>
+                            <Input value="{customer>/Telephone}"/>
+                    </f:content>
+                    </f:SimpleForm>
+                </content>
+            </Panel>
+        </content>
+    </Page>
+
+</mvc:View>
